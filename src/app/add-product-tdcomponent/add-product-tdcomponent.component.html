@@ -1,0 +1,76 @@
+<form (ngSubmit)="onSubmit()" #productForm="ngForm">
+  <div class="form-group">
+    <label for="idProduit">ID Produit:</label>
+    <input type="text" id="idProduit" [(ngModel)]="product.idProduit" name="idProduit" class="form-control" required>
+    <div *ngIf="!productForm.controls['idProduit'].valid" class="alert alert-danger" role="alert">
+      * ID Produit is required.
+    </div>  </div>
+
+    <div class="form-group">
+      <label for="code">Code:</label>
+      <input type="text" id="code" [(ngModel)]="product.code" name="code" #code="ngModel" class="form-control" required pattern =" [a-zA-Z-0-9]{8}">
+      <div *ngIf="code.invalid && code.errors">
+        <div *ngIf="code.errors['required']" class="alert alert-danger">
+          Code obligatoire.
+        </div>
+        <div *ngIf="code.errors['pattern']" class="alert alert-danger">
+          Le code doit contenir 8 caractères.
+        </div>
+      </div>
+    </div>
+
+  <div class="form-group">
+    <label for="libelle">Libellé:</label>
+    <input type="text" id="libelle" [(ngModel)]="product.libelle" name="libelle" #libelle="ngModel"class="form-control" minlength="3" required>
+    <div *ngIf="libelle.invalid && libelle.errors">
+      <div *ngIf="libelle.errors['required']" class="alert alert-danger">
+        libelle obligatoire.
+      </div>
+      <div *ngIf="libelle.errors['minlength']" class="alert alert-danger">
+        Le code doit contenir 3 caractères at least
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="prixUnitaire">Prix unitaire:</label>
+    <input type="text" id="prixUnitaire" [(ngModel)]="product.prixUnitaire" name="prixUnitaire"  #prixUnitaire="ngModel" class="form-control" pattern="[1-9][0-9]*" required>
+    <div *ngIf="prixUnitaire.invalid && prixUnitaire.errors">
+      <div *ngIf="prixUnitaire.errors['required']" class="alert alert-danger">
+        prixUnitaire obligatoire.
+      </div>
+      <div *ngIf="prixUnitaire.errors['pattern']" class="alert alert-danger">
+        Le prix unitaire ne contient que des chiffres.
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <button type="submit" class="btn btn-primary"[disabled]="productForm.controls['idProduit'].invalid || productForm.controls['code'].invalid || productForm.controls['libelle'].invalid || productForm.controls['prixUnitaire'].invalid"  [hidden]="productForm.controls['idProduit'].valid || productForm.controls['code'].valid || productForm.controls['libelle'].valid || productForm.controls['prixUnitaire'].valid">Suivant</button>
+
+
+  <div class="form-group"  [hidden]="productForm.controls['idProduit'].invalid || productForm.controls['code'].invalid || productForm.controls['libelle'].invalid || productForm.controls['prixUnitaire'].invalid">    <label for="idDetailsProduit">ID Détails Produit:</label>
+    <input type="text" id="idDetailsProduit" [(ngModel)]="product.idDetailsProduit" name="idDetailsProduit" class="form-control" required>
+  </div>
+
+  <div class="form-group" [hidden]="productForm.controls['idProduit'].invalid || productForm.controls['code'].invalid || productForm.controls['libelle'].invalid || productForm.controls['prixUnitaire'].invalid">    <label for="dateCreation">Date création:</label>
+    <input type="text" id="dateCreation" [(ngModel)]="product.dateCreation" name="dateCreation" class="form-control" required>
+  </div>
+
+  <div class="form-group" [hidden]="productForm.controls['idProduit'].invalid || productForm.controls['code'].invalid || productForm.controls['libelle'].invalid || productForm.controls['prixUnitaire'].invalid ||productForm.controls['dateCreation'].invalid ">    <label for="dateDerniereModification">Date dernière modification:</label>
+    <input type="text" id="dateDerniereModification" [(ngModel)]="product.dateDerniereModification" name="dateDerniereModification" class="form-control" required>
+  </div>
+
+  <div class="form-group" [hidden]="productForm.controls['idProduit'].invalid || productForm.controls['code'].invalid || productForm.controls['libelle'].invalid || productForm.controls['prixUnitaire'].invalid">    <label for="categorieProduit">Catégorie Produit:</label>
+    <select id="categorieProduit" [(ngModel)]="product.categorieProduit" name="categorieProduit" class="form-control" required>
+      <option value="">Select a category</option>
+      <option value="Electromenager">Electromenager</option>
+      <option value="Alimentaire">Alimentaire</option>
+      <option value="Quincaillerie">Quincaillerie</option>
+    </select>
+  </div>
+
+  <button type="submit" class="btn btn-primary" [hidden]="productForm.controls['idProduit'].invalid || productForm.controls['code'].invalid || productForm.controls['libelle'].invalid || productForm.controls['prixUnitaire'].invalid || productForm.controls['idDetailsProduit'].invalid || productForm.controls['dateCreation'].invalid || productForm.controls['dateDerniereModification'].invalid || productForm.controls['categorieProduit'].invalid"> Ajouter</button>
+</form>
